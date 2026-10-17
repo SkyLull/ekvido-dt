@@ -21,33 +21,36 @@ Because I liked this:
 <sub>《凪のあすから》背景美術，© Project-118／凪のあすから製作委員会。僅作為參考引用，不在本專案的 GPL 授權範圍內。<br>
 Background art from *Nagi no Asukara*, © Project-118 / Nagi no Asukara Production Committee. Quoted for reference only; not covered by this project's GPL licence.</sub>
 
-所以我做了 ekvido，可以把這個：<br>
-So I made "ekvido", which can turn this:
+所以做了那個非常開源的行為(go fork myself)，讓 DarkTable 可以把這個：<br>
+So I did the open source thing and go fork myself and made this, which can turn this:
 
 ![處理前 / before](assets/before.webp)
+<sub>自攝照片/Photo by me</sub>
+
 
 變成這個：<br>
 Into THIS:
 
 ![處理後 / after](assets/after.webp)
+<sub>自攝照片/Photo by me</sub>
 
 ## 兩個模組 The two modules
 
-| 模組 Module | 做什麼 What it does |
+| 模組 Module | 功用 What it does |
 |---|---|
-| **ekvido kazuki** | 「Kazuki 光」：依照亮部本身的色相上色的光暈，陽光反射偏暖橘、環境光和月光偏深藍到青，形狀是柔和的十字或光芒，而不是一團圓。附 Clip Studio Paint 的混合模式（濾色、覆蓋、加亮顏色、發光加亮，以及「覆蓋（僅光暈）」），還能拿別的模組的遮罩當「光從哪裡來」。<br>"Kazuki light": bloom coloured by each highlight's own hue (warm orange for sunlight reflections, deep blue to cyan for ambient light and moonlight), shaped as a soft cross or streaks instead of a round blob. Clip Studio Paint blend modes, plus an optional source mask borrowed from another module. |
+| **ekvido kazuki** | 「Kazuki 光」：命名致敬《來自風平浪靜的明日》的美術監督 東地和生 先生。依照亮部本身的色相上色的光暈，陽光反射偏暖橘、環境光和月光偏深藍到青，形狀是柔和的十字或光芒。附啟發自 Clip Studio Paint 的混色模式（濾色、覆蓋、加亮顏色、發光加亮，以及「覆蓋（僅光暈）」），並具有拿別的模組的遮罩當作為輸入光源範圍。<br>"Kazuki light": Naming is a nod toward Mr. Higashiji Kazuki, the art director of "Nagi no Asukara". bloom coloured by each highlight's own hue (warm orange for sunlight reflections, deep blue to cyan for ambient light and moonlight), shaped as a soft cross or streaks instead of a round blob. Clip Studio Paint blend modes, plus an optional source mask borrowed from another module. |
 | **ekvido mist** | 物理式的柔焦濾鏡（白霧／黑霧）：光暈強度跟著真實的場景亮度走，用核心＋光暈＋薄紗三層 PSF 做卷積。<br>Physically based diffusion (white / black mist): bloom strength follows true scene intensity, via a core + halo + veil PSF convolution. |
 
 兩個模組都在 scene-referred 的線性資料上運作，放在 pipeline 裡 *blurs* 的正後方，有 OpenCL 時會跑在 GPU 上。<br>
 Both work on scene-referred linear data, sit right after *blurs* in the pipe, and run on the GPU when OpenCL is available.
 
-## ⚠️ 先說好：這是「軟分支」 Heads-up: this is a soft fork
+## ⚠️ 這是「軟分支」 Heads-up: this is a soft fork
 
-ekvido **不是** 硬分支（另起爐灶、從此和上游分道揚鑣的 darktable），也 **不是** 真正的「外掛」：darktable 沒有讓第三方模組直接掛上去的介面。
+ekvido **不是** 硬分支（一個另起爐灶、從此和上游分道揚鑣的 darktable），也 **不是** 真正的「外掛」：darktable 沒有讓第三方模組直接掛上去的介面。
 
 它是一包 **整個檔案的替換**：我們新增的檔案，加上少數幾個被改過的 darktable 原始檔，綁定在某一個 darktable 版本（現在是 `release-5.6.2`，寫在 `darktable/UPSTREAM`）。每次建置都會從 GitHub 抓那個版本的官方原始碼，再把這些檔案蓋上去。
 
-- 好處：你拿到的永遠是官方 darktable 加上 ekvido，沒有別的私貨。
+- 好處：你拿到的永遠是官方 darktable 加上 ekvido，沒有別的。
 - 代價：只對那一個版本有效。darktable 出新版時，要由這邊更新版本綁定、重新檢查被改過的檔案，不能自己拿去套在任何版本上。
 - 另外：用了 ekvido 模組的 XMP，拿去給一般版的 darktable 編輯，ekvido 的步驟會被丟掉。
 
@@ -73,7 +76,7 @@ assets/               這份 README 的圖 / images for this README
 ## 建置 Build
 
 需要 / Requirements:
-- 每個平台都要 [mise](https://mise.jdx.dev/) 和 git。<br>[mise](https://mise.jdx.dev/) and git, everywhere.
+- [mise](https://mise.jdx.dev/) 和 git。<br>[mise](https://mise.jdx.dev/) and git, everywhere.
 - **macOS**：Homebrew 和 Xcode command line tools。`mise run deps` 會從 darktable 的 `.ci/Brewfile` 裝套件，不會升級其他東西。<br>Homebrew + Xcode CLT; `mise run deps` installs from darktable's `.ci/Brewfile` without upgrading anything else.
 - **Ubuntu 24.04**：`mise run deps` 會裝 `darktable/packaging/ekvido/ubuntu-24.04.txt` 裡的 apt 套件（會問 sudo）。<br>`mise run deps` installs the apt packages listed there (asks for sudo).
 - **Windows**：MSYS2 裝在 `C:\msys64`，加上 Inno Setup 6（`winget install MSYS2.MSYS2` / `JRSoftware.InnoSetup`）。在 PowerShell 或 cmd 跑 mise 指令，它們會在 MSYS2 UCRT64 shell 裡執行腳本；第一次 clone 用 Windows 的 Git，`deps` 之後就能用 MSYS2 自己的 git。<br>MSYS2 at `C:\msys64` + Inno Setup 6. Run mise from PowerShell or cmd; the scripts run in an MSYS2 UCRT64 shell. The first clone uses Git for Windows; after `deps`, MSYS2's own git works too.
