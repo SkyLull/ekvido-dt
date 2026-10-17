@@ -1,0 +1,6 @@
+VkFFT v1.3.4 (https://github.com/DTolm/VkFFT, tag v1.3.4), MIT licence (LICENSE).
+Only the header tree (vkFFT.h, vkFFT/) is vendored, unmodified. Used by the ekvido GPU path
+(src/common/ekvido/cl/ekv_cl_fft.c, OpenCL backend VKFFT_BACKEND 3). Its OpenCL calls go
+through ekvido's function table (ekv_clredirect.h), because darktable loads OpenCL at run time.
+To bump: replace both, re-run `mise run test-cl` on an OpenCL machine, update this file and the version
+string EKV_VKFFT_VERSION in ekv_cl_fft.c (it keys the on-disk plan cache).

@@ -1,0 +1,9 @@
+.dt/
+__pycache__/
+*.py[cod]
+.venv/
+.coverage
+.ruff_cache/
+.pytest_cache/
+*.egg-info/
+.DS_Store

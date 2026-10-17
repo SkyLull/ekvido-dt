@@ -1,0 +1,33 @@
+[tasks.deps]
+description = "Install darktable build dependencies (this OS)"
+run = "bash packaging/ekvido/deps.sh"
+run_windows = "packaging\\ekvido\\win.cmd deps"
+
+[tasks.build]
+description = "Configure, build and install darktable into this OS's prefix"
+run = "bash packaging/ekvido/build.sh"
+run_windows = "packaging\\ekvido\\win.cmd build"
+
+[tasks.test]
+description = "Build and run the ekvido core tests against the Python fixtures"
+run = "bash packaging/ekvido/test-core.sh"
+run_windows = "packaging\\ekvido\\win.cmd test-core"
+
+[tasks.test-cl]
+description = "Build and run the ekvido GPU tests (OpenCL path vs the C core; needs an OpenCL GPU)"
+run = "bash packaging/ekvido/test-cl.sh"
+
+[tasks.package]
+description = "Make the macOS app bundle / Windows installer (no-op on Linux)"
+run = "bash packaging/ekvido/package.sh"
+run_windows = "packaging\\ekvido\\win.cmd package"
+
+[tasks.install]
+description = "Back up config and install our build for daily use"
+run = "bash packaging/ekvido/install.sh"
+run_windows = "packaging\\ekvido\\win.cmd install"
+
+[tasks.l10n]
+description = "Refresh the ekvido translation template and merge it into po/ekvido/*.po"
+run = "bash packaging/ekvido/l10n.sh"
+run_windows = "packaging\\ekvido\\win.cmd l10n"

@@ -1,0 +1,79 @@
+[project]
+name = "ekvido"
+version = "0.1.0"
+description = "Custom scene-linear photo filters (mist, Kazuki light) for a RAW workflow"
+readme = "README.md"
+requires-python = ">=3.12"
+license = "GPL-3.0-or-later"
+authors = [{ name = "Jack Chen" }]
+dependencies = [
+    "torch>=2.5",
+    "numpy>=2.0",
+    "tifffile>=2024.8.0",
+    "imagecodecs>=2024.6.1",
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "pillow>=10.4",
+]
+
+[project.scripts]
+ekvido = "ekvido.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ekvido"]
+
+[tool.pytest.ini_options]
+markers = [
+    "gpu: needs CUDA or MPS (skipped otherwise)",
+    "data: needs the target-1 sample TIFFs (skipped otherwise)",
+]
+
+[dependency-groups]
+test = [
+    "pytest",
+    "coverage",
+    "httpx2",
+    "ruff",
+    "bandit",
+    "pip-audit",
+    "cyclonedx-bom",
+]
+
+[tool.ruff]
+target-version = "py312"
+extend-exclude = ["docs"]
+line-length = 88
+
+[tool.ruff.lint]
+ignore = ["E501"]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "UP",  # pyupgrade
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = [
+    "E402",  # module-level imports not at top of file
+]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.coverage.run]
+source = ["src/ekvido"]
+omit = [
+    "tests/*",
+    ".venv/*",
+]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 80

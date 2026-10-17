@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ekvido</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header id="bar">
+    <strong>ekvido</strong>
+    <span id="image-name"></span>
+    <label>view <select id="view"></select></label>
+    <label>exposure <input id="exposure" type="range" min="-4" max="4" step="0.05" value="0"><span id="exposure-val">0.00</span></label>
+    <button id="before" title="hold (or hold B)">before</button>
+    <button id="fit" title="or double-click the image">fit</button>
+    <button id="render">render full</button>
+    <span id="status"></span>
+  </header>
+  <main>
+    <div id="viewport"><img id="frame" alt="preview" draggable="false"></div>
+    <aside id="panel">
+      <div class="row">input
+        <select id="referred"><option value="scene">scene (linear, filmic off)</option><option value="display">display (tone-mapped)</option></select>
+      </div>
+      <div id="stack"></div>
+    </aside>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>

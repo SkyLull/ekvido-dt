@@ -1,0 +1,623 @@
+# ekvido strings for darktable, Traditional Chinese (Taiwan).
+# Laid over po/zh_TW.po at build time (po/CMakeLists.txt); refresh with packaging/ekvido/l10n.sh.
+msgid ""
+msgstr ""
+"Project-Id-Version: darktable-ekvido\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-16 12:04+0800\n"
+"PO-Revision-Date: 2026-10-16 12:00+0800\n"
+"Last-Translator: Jack Chen\n"
+"Language-Team: zh_TW\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: <introspection>/introspection_ekvidokazuki.c:284
+#: <introspection>/introspection_ekvidokazuki.c:579
+msgid "glow strength"
+msgstr "輝光強度"
+
+#: <introspection>/introspection_ekvidokazuki.c:290
+#: <introspection>/introspection_ekvidokazuki.c:583
+msgid "glow blend"
+msgstr "輝光混合模式"
+
+#: <introspection>/introspection_ekvidokazuki.c:296
+#: <introspection>/introspection_ekvidokazuki.c:587
+msgid "blend white (EV)"
+msgstr "混合白點（EV）"
+
+#: <introspection>/introspection_ekvidokazuki.c:302
+#: <introspection>/introspection_ekvidokazuki.c:591
+msgid "glow threshold (EV)"
+msgstr "發光臨界值（EV）"
+
+#: <introspection>/introspection_ekvidokazuki.c:308
+#: <introspection>/introspection_ekvidokazuki.c:595
+msgid "threshold softness (EV)"
+msgstr "閾值邊界柔和度（EV）"
+
+#: <introspection>/introspection_ekvidokazuki.c:314
+#: <introspection>/introspection_ekvidokazuki.c:599
+msgid "clip detection"
+msgstr "過曝偵測"
+
+#: <introspection>/introspection_ekvidokazuki.c:320
+#: <introspection>/introspection_ekvidokazuki.c:603
+msgid "clip level (EV)"
+msgstr "過曝亮度（EV）"
+
+#: <introspection>/introspection_ekvidokazuki.c:326
+#: <introspection>/introspection_ekvidokazuki.c:607
+msgid "colour sampling area"
+msgstr "取色範圍"
+
+#: <introspection>/introspection_ekvidokazuki.c:332
+#: <introspection>/introspection_ekvidokazuki.c:611
+msgid "neutral point"
+msgstr "中性點"
+
+#: <introspection>/introspection_ekvidokazuki.c:338
+#: <introspection>/introspection_ekvidokazuki.c:615
+msgid "warm/cool softness"
+msgstr "冷暖過渡柔和度"
+
+#: <introspection>/introspection_ekvidokazuki.c:344
+#: <introspection>/introspection_ekvidokazuki.c:619
+msgid "colourless source bias"
+msgstr "無色光源偏向"
+
+#: <introspection>/introspection_ekvidokazuki.c:350
+#: <introspection>/introspection_ekvidokazuki.c:623
+msgid "warm colour pull"
+msgstr "暖色傾向"
+
+#: <introspection>/introspection_ekvidokazuki.c:356
+#: <introspection>/introspection_ekvidokazuki.c:627
+msgid "cool colour pull"
+msgstr "冷色傾向"
+
+#: <introspection>/introspection_ekvidokazuki.c:362
+#: <introspection>/introspection_ekvidokazuki.c:631
+msgid "warm centre hue"
+msgstr "暖色中心色相"
+
+#: <introspection>/introspection_ekvidokazuki.c:368
+#: <introspection>/introspection_ekvidokazuki.c:635
+msgid "warm centre saturation"
+msgstr "暖色中心飽和度"
+
+#: <introspection>/introspection_ekvidokazuki.c:374
+#: <introspection>/introspection_ekvidokazuki.c:639
+msgid "warm edge hue"
+msgstr "暖色邊緣色相"
+
+#: <introspection>/introspection_ekvidokazuki.c:380
+#: <introspection>/introspection_ekvidokazuki.c:643
+msgid "warm edge saturation"
+msgstr "暖色邊緣飽和度"
+
+#: <introspection>/introspection_ekvidokazuki.c:386
+#: <introspection>/introspection_ekvidokazuki.c:647
+msgid "cool centre hue"
+msgstr "冷色中心色相"
+
+#: <introspection>/introspection_ekvidokazuki.c:392
+#: <introspection>/introspection_ekvidokazuki.c:651
+msgid "cool centre saturation"
+msgstr "冷色中心飽和度"
+
+#: <introspection>/introspection_ekvidokazuki.c:398
+#: <introspection>/introspection_ekvidokazuki.c:655
+msgid "cool edge hue"
+msgstr "冷色邊緣色相"
+
+#: <introspection>/introspection_ekvidokazuki.c:404
+#: <introspection>/introspection_ekvidokazuki.c:659
+msgid "cool edge saturation"
+msgstr "冷色邊緣飽和度"
+
+#: <introspection>/introspection_ekvidokazuki.c:410
+#: <introspection>/introspection_ekvidokazuki.c:663
+msgid "centre/edge colour radius"
+msgstr "中心／邊緣色半徑"
+
+#: <introspection>/introspection_ekvidokazuki.c:416
+#: <introspection>/introspection_ekvidokazuki.c:667
+#: <introspection>/introspection_ekvidomist.c:135
+#: <introspection>/introspection_ekvidomist.c:272
+msgid "halo size"
+msgstr "光暈大小"
+
+#: <introspection>/introspection_ekvidokazuki.c:422
+#: <introspection>/introspection_ekvidokazuki.c:671
+#: <introspection>/introspection_ekvidomist.c:141
+#: <introspection>/introspection_ekvidomist.c:276
+msgid "halo falloff"
+msgstr "光暈衰減"
+
+#: <introspection>/introspection_ekvidokazuki.c:428
+#: <introspection>/introspection_ekvidokazuki.c:675
+#: <introspection>/introspection_ekvidomist.c:147
+#: <introspection>/introspection_ekvidomist.c:280
+msgid "halo width"
+msgstr "光暈寬度"
+
+#: <introspection>/introspection_ekvidokazuki.c:434
+#: <introspection>/introspection_ekvidokazuki.c:679
+#: <introspection>/introspection_ekvidomist.c:153
+#: <introspection>/introspection_ekvidomist.c:284
+msgid "halo height"
+msgstr "光暈高度"
+
+#: <introspection>/introspection_ekvidokazuki.c:440
+#: <introspection>/introspection_ekvidokazuki.c:683
+#: <introspection>/introspection_ekvidomist.c:159
+#: <introspection>/introspection_ekvidomist.c:288
+msgid "haze size"
+msgstr "薄霧大小"
+
+#: <introspection>/introspection_ekvidokazuki.c:446
+#: <introspection>/introspection_ekvidokazuki.c:687
+#: <introspection>/introspection_ekvidomist.c:165
+#: <introspection>/introspection_ekvidomist.c:292
+msgid "haze falloff"
+msgstr "薄霧衰減"
+
+#: <introspection>/introspection_ekvidokazuki.c:452
+#: <introspection>/introspection_ekvidokazuki.c:691
+#: <introspection>/introspection_ekvidomist.c:171
+#: <introspection>/introspection_ekvidomist.c:296
+msgid "halo share"
+msgstr "光暈佔比"
+
+#: <introspection>/introspection_ekvidokazuki.c:458
+#: <introspection>/introspection_ekvidokazuki.c:695
+#: <introspection>/introspection_ekvidomist.c:177
+#: <introspection>/introspection_ekvidomist.c:300
+msgid "haze share"
+msgstr "薄霧佔比"
+
+#: <introspection>/introspection_ekvidokazuki.c:464
+#: <introspection>/introspection_ekvidokazuki.c:699
+#: <introspection>/introspection_ekvidomist.c:183
+#: <introspection>/introspection_ekvidomist.c:304
+msgid "star arms"
+msgstr "星芒光芒數"
+
+#: <introspection>/introspection_ekvidokazuki.c:470
+#: <introspection>/introspection_ekvidokazuki.c:703
+#: <introspection>/introspection_ekvidomist.c:189
+#: <introspection>/introspection_ekvidomist.c:308
+msgid "star rotation"
+msgstr "星芒旋轉角度"
+
+#: <introspection>/introspection_ekvidokazuki.c:476
+#: <introspection>/introspection_ekvidokazuki.c:707
+#: <introspection>/introspection_ekvidomist.c:195
+#: <introspection>/introspection_ekvidomist.c:312
+msgid "star core size"
+msgstr "星芒中心大小"
+
+#: <introspection>/introspection_ekvidokazuki.c:482
+#: <introspection>/introspection_ekvidokazuki.c:711
+#: <introspection>/introspection_ekvidomist.c:201
+#: <introspection>/introspection_ekvidomist.c:316
+msgid "star falloff"
+msgstr "星芒衰減"
+
+#: <introspection>/introspection_ekvidokazuki.c:488
+#: <introspection>/introspection_ekvidokazuki.c:715
+#: <introspection>/introspection_ekvidomist.c:207
+#: <introspection>/introspection_ekvidomist.c:320
+msgid "star shape"
+msgstr "星芒形狀"
+
+#: <introspection>/introspection_ekvidokazuki.c:494
+#: <introspection>/introspection_ekvidokazuki.c:719
+#: <introspection>/introspection_ekvidomist.c:213
+#: <introspection>/introspection_ekvidomist.c:324
+msgid "star width"
+msgstr "星芒寬度"
+
+#: <introspection>/introspection_ekvidokazuki.c:500
+#: <introspection>/introspection_ekvidokazuki.c:723
+#: <introspection>/introspection_ekvidomist.c:219
+#: <introspection>/introspection_ekvidomist.c:328
+msgid "star height"
+msgstr "星芒高度"
+
+#: <introspection>/introspection_ekvidokazuki.c:506
+#: <introspection>/introspection_ekvidokazuki.c:727
+#: <introspection>/introspection_ekvidomist.c:225
+#: <introspection>/introspection_ekvidomist.c:332
+msgid "star share"
+msgstr "星芒佔比"
+
+#: <introspection>/introspection_ekvidokazuki.c:524
+#: <introspection>/introspection_ekvidokazuki.c:739
+msgid "source mask instance"
+msgstr "光源遮罩實例"
+
+#: <introspection>/introspection_ekvidokazuki.c:530
+#: <introspection>/introspection_ekvidokazuki.c:743
+msgid "source mask id"
+msgstr "光源遮罩 ID"
+
+#: <introspection>/introspection_ekvidokazuki.c:536
+#: <introspection>/introspection_ekvidokazuki.c:747
+msgid "invert source mask"
+msgstr "反轉光源遮罩"
+
+#: <introspection>/introspection_ekvidokazuki.c:761
+msgctxt "kazuki blend"
+msgid "additive"
+msgstr "相加"
+
+#: <introspection>/introspection_ekvidokazuki.c:762
+msgctxt "kazuki blend"
+msgid "conserve"
+msgstr "守恆"
+
+#: <introspection>/introspection_ekvidokazuki.c:763
+msgctxt "kazuki blend"
+msgid "screen"
+msgstr "濾色"
+
+#: <introspection>/introspection_ekvidokazuki.c:764
+msgctxt "kazuki blend"
+msgid "overlay"
+msgstr "覆蓋"
+
+#: <introspection>/introspection_ekvidokazuki.c:765
+msgctxt "kazuki blend"
+msgid "colour dodge"
+msgstr "加亮顏色"
+
+#: <introspection>/introspection_ekvidokazuki.c:766
+msgctxt "kazuki blend"
+msgid "glow dodge"
+msgstr "加亮顏色（發光）"
+
+#: <introspection>/introspection_ekvidokazuki.c:767
+msgctxt "kazuki blend"
+msgid "overlay (glow only)"
+msgstr "覆蓋（僅輝光）"
+
+#: <introspection>/introspection_ekvidokazuki.c:771
+msgid "auto"
+msgstr "自動"
+
+#: <introspection>/introspection_ekvidokazuki.c:772
+msgid "manual"
+msgstr "手動"
+
+#: <introspection>/introspection_ekvidomist.c:129
+#: <introspection>/introspection_ekvidomist.c:268
+msgid "scatter amount"
+msgstr "散射量"
+
+#: src/iop/ekvidokazuki.c:305
+#, c-format
+msgid "source mask from %s unavailable: no glow"
+msgstr "無法取得來自「%s」的光源遮罩：不產生輝光"
+
+#: src/iop/ekvidokazuki.c:308
+msgid ""
+"the source mask module is missing, disabled, after kazuki in the pipe, or has no drawn or parametric mask.\n"
+"kazuki adds no glow until that is fixed or the source mask is set to none."
+msgstr ""
+"提供光源遮罩的模組不存在、已停用、在處理流程中位於 kazuki 之後，或沒有繪製或參數遮罩。\n"
+"在修正此問題或將光源遮罩設為「無」之前，kazuki 不會產生輝光。"
+
+#: src/iop/ekvidokazuki.c:349
+msgid "ekvido kazuki"
+msgstr "ekvido kazuki"
+
+#: src/iop/ekvidokazuki.c:354
+msgid "kazuki|glow|bloom|halation|star|glint|flare"
+msgstr "kazuki|輝光|光暈|星芒|閃光|耀光|glow|bloom|halation|star|glint|flare"
+
+#: src/iop/ekvidokazuki.c:359
+msgid "highlights glow in their own warm or cool colour, with halo, haze and star shapes"
+msgstr "亮部依自身顏色和冷暖偏向發出對應顏色的輝光，形狀包括光暈、薄霧與星芒"
+
+#: src/iop/ekvidokazuki.c:360 src/iop/ekvidomist.c:101
+msgid "creative"
+msgstr "創意"
+
+#: src/iop/ekvidokazuki.c:360 src/iop/ekvidomist.c:101
+msgid "linear, RGB"
+msgstr "線性、RGB"
+
+#: src/iop/ekvidokazuki.c:360 src/iop/ekvidokazuki.c:361
+#: src/iop/ekvidomist.c:101 src/iop/ekvidomist.c:102
+msgid "linear, RGB, scene-referred"
+msgstr "線性、RGB、場景參照"
+
+#: src/iop/ekvidokazuki.c:462
+msgid "inconsistent output"
+msgstr "輸出結果不一致"
+
+#: src/iop/ekvidokazuki.c:513
+msgid "ekvido kazuki: not enough memory, module skipped"
+msgstr "ekvido kazuki：記憶體不足，已略過此模組"
+
+#: src/iop/ekvidokazuki.c:562
+msgid "kazuki default"
+msgstr "kazuki 預設"
+
+#: src/iop/ekvidokazuki.c:575
+msgid "kazuki wide"
+msgstr "kazuki 寬幅"
+
+#: src/iop/ekvidokazuki.c:673
+msgid "cannot show a glow preview while a blend mask is displayed"
+msgstr "顯示混合遮罩時無法預覽輝光"
+
+#: src/iop/ekvidokazuki.c:733
+msgid "none"
+msgstr "無"
+
+#: src/iop/ekvidokazuki.c:756
+#, c-format
+msgid "%s (unavailable)"
+msgstr "%s（無法使用）"
+
+#: src/iop/ekvidokazuki.c:806 src/iop/ekvidomist.c:356
+msgid "glow shape on a log scale; the bar shows a fraction of the image diagonal"
+msgstr "以對數尺度顯示輝光形狀；比例尺為影像對角線的比例"
+
+#: src/iop/ekvidokazuki.c:808
+msgid "preview"
+msgstr "預覽"
+
+#: src/iop/ekvidokazuki.c:809
+msgid "what the centre view shows (not saved, not exported): the final image, the glow alone, the highlight energy, the warmth map (blue cool, grey neutral, orange warm) or the clipped areas in red"
+msgstr "中央檢視顯示的內容（不會儲存，也不會匯出）：最終影像、僅輝光、亮部能量、冷暖分佈（藍為冷、灰為中性、橙為暖），或以紅色標出過曝區域"
+
+#: src/iop/ekvidokazuki.c:812
+msgid "energy"
+msgstr "能量"
+
+#: src/iop/ekvidokazuki.c:812
+msgid "final"
+msgstr "最終影像"
+
+#: src/iop/ekvidokazuki.c:812
+msgid "glow only"
+msgstr "僅輝光"
+
+#: src/iop/ekvidokazuki.c:813
+msgid "clipped"
+msgstr "過曝"
+
+#: src/iop/ekvidokazuki.c:813
+msgid "warmth"
+msgstr "冷暖"
+
+#: src/iop/ekvidokazuki.c:817
+msgid "overall amount of glow added"
+msgstr "加入輝光的整體強度"
+
+#: src/iop/ekvidokazuki.c:819
+msgid "additive: glow adds light, like flare. conserve: light moves from sources to surroundings, total stays the same; screen / overlay / colour dodge / glow dodge: Clip Studio Paint's layer modes (overlay also darkens glow-free areas); overlay (glow only): overlay that leaves glow-free areas alone"
+msgstr "相加：輝光線性增加光量，就像耀光。守恆：光從光源移到周圍，總光量不變；濾色／覆蓋／加亮顏色／加亮顏色（發光）：Clip Studio Paint 的圖層混合模式（覆蓋也會壓暗沒有輝光的區域）；覆蓋（僅輝光）：不影響沒有輝光的區域的覆蓋"
+
+#: src/iop/ekvidokazuki.c:825
+msgid "for screen, the overlays and the dodges: the brightness treated as the layer's white; 0 = paper white"
+msgstr "用於濾色、兩種覆蓋與兩種加亮顏色：視為圖層白色的亮度；0 = 紙白"
+
+#: src/iop/ekvidokazuki.c:830 src/iop/ekvidokazuki.c:832
+msgid "detection"
+msgstr "偵測"
+
+#: src/iop/ekvidokazuki.c:832
+msgid "source mask"
+msgstr "光源遮罩"
+
+#: src/iop/ekvidokazuki.c:836
+msgid "where light may come from: the drawn and/or parametric mask of a module before kazuki (e.g. an exposure instance at 0 EV). only masked areas emit; the glow still spreads over the whole image. kazuki's own blending mask still gates the output."
+msgstr "光可以從哪裡發出：使用 kazuki 之前某個模組的繪製遮罩和／或參數遮罩（例如一個設為 0 EV 的曝光模組實例）。只有遮罩內的區域會發光，輝光仍會擴散到整張影像。kazuki 自己的混合遮罩仍會限制輸出範圍。"
+
+#: src/iop/ekvidokazuki.c:842
+msgid "light comes from outside the source mask instead"
+msgstr "改為從光源遮罩以外的區域發光"
+
+#: src/iop/ekvidokazuki.c:843
+msgid "how bright a pixel must be to glow; 0 = paper white, each +1 doubles it"
+msgstr "像素要多亮才會發光；0 = 紙白，每 +1 亮度加倍"
+
+#: src/iop/ekvidokazuki.c:844
+msgid "fades glow in gradually around the threshold instead of a hard cut"
+msgstr "在臨界值附近逐漸淡入輝光，而非硬性截斷"
+
+#: src/iop/ekvidokazuki.c:846
+msgid "auto: find clipped highlights automatically; manual: use the clip level below"
+msgstr "自動：自動找出過曝的亮部；手動：使用下方的過曝亮度定義"
+
+#: src/iop/ekvidokazuki.c:847
+msgid "in manual mode, the brightness treated as clipped; 0 = paper white"
+msgstr "手動模式下視為過曝的亮度；0 = 紙白"
+
+#: src/iop/ekvidokazuki.c:849
+msgid "colour"
+msgstr "色彩"
+
+#: src/iop/ekvidokazuki.c:850
+msgid "how far around each bright spot its colour is read from; clipped spots take their fringe's colour"
+msgstr "從每個亮點周圍多遠的範圍取色；過曝的亮點採用其邊緣的顏色"
+
+#: src/iop/ekvidokazuki.c:851
+msgid "shifts what counts as neutral; move it if neutral sources glow orange or blue"
+msgstr "移動「中性」的定義基準；若目標中性光源在場景中發出橙色或藍色的輝光可以此調整"
+
+#: src/iop/ekvidokazuki.c:852
+msgid "how gradually glows change from cool to warm; higher gives more in-between tones"
+msgstr "輝光由冷轉暖的漸變程度；越高中間色調越多"
+
+#: src/iop/ekvidokazuki.c:853
+msgid "warmth for blown-out spots with no colour around them: 1 warm, 0 cool"
+msgstr "周圍沒有顏色的過曝亮點的冷暖：1 為暖，0 為冷"
+
+#: src/iop/ekvidokazuki.c:854
+msgid "how strongly warm glows take the warm colours; 0 keeps the source's own colour"
+msgstr "暖色輝光套用暖色的強度；0 保留光源本身的顏色"
+
+#: src/iop/ekvidokazuki.c:855
+msgid "how strongly cool glows take the cool colours; 0 keeps the source's own colour"
+msgstr "冷色輝光套用冷色的強度；0 保留光源本身的顏色"
+
+#: src/iop/ekvidokazuki.c:856 src/iop/ekvidokazuki.c:857
+msgid "colour at the centre of warm glows (pale gold)"
+msgstr "暖色輝光中心的顏色（淡金色）"
+
+#: src/iop/ekvidokazuki.c:858 src/iop/ekvidokazuki.c:859
+msgid "colour at the outside of warm glows (orange)"
+msgstr "暖色輝光外圍的顏色（橙色）"
+
+#: src/iop/ekvidokazuki.c:860 src/iop/ekvidokazuki.c:861
+msgid "colour at the centre of cool glows (cyan)"
+msgstr "冷色輝光中心的顏色（青色）"
+
+#: src/iop/ekvidokazuki.c:862 src/iop/ekvidokazuki.c:863
+msgid "colour at the outside of cool glows (deep blue)"
+msgstr "冷色輝光外圍的顏色（深藍色）"
+
+#: src/iop/ekvidokazuki.c:864
+msgid "where the centre colour hands over to the edge colour"
+msgstr "中心色過渡到邊緣色的位置"
+
+#: src/iop/ekvidokazuki.c:866 src/iop/ekvidomist.c:368
+msgid "halo"
+msgstr "光暈"
+
+#: src/iop/ekvidokazuki.c:867 src/iop/ekvidomist.c:369
+msgid "size of the main soft glow (fraction of the image diagonal)"
+msgstr "主要柔和輝光的大小（影像對角線的比例）"
+
+#: src/iop/ekvidokazuki.c:868 src/iop/ekvidomist.c:370
+msgid "low: long misty tail; high: tight glow"
+msgstr "低：拖出長長的霧狀尾巴；高：輝光集中"
+
+#: src/iop/ekvidokazuki.c:869 src/iop/ekvidokazuki.c:870
+msgid "stretch the halo into an oval"
+msgstr "將光暈拉成橢圓狀"
+
+#: src/iop/ekvidokazuki.c:871 src/iop/ekvidomist.c:373
+msgid "share of the glow in the halo (black mist: high)"
+msgstr "光暈在輝光中的佔比（黑柔焦：高）"
+
+#: src/iop/ekvidokazuki.c:873 src/iop/ekvidomist.c:375
+msgid "haze"
+msgstr "薄霧"
+
+#: src/iop/ekvidokazuki.c:874
+msgid "size of the very wide, faint haze"
+msgstr "範圍極廣、極淡的薄霧大小"
+
+#: src/iop/ekvidokazuki.c:875 src/iop/ekvidomist.c:377
+msgid "low: haze reaches further"
+msgstr "低：薄霧延伸得更遠"
+
+#: src/iop/ekvidokazuki.c:876 src/iop/ekvidomist.c:378
+msgid "share of the glow in the wide haze (white mist: high)"
+msgstr "廣域薄霧在輝光中的佔比（白柔焦：高）"
+
+#: src/iop/ekvidokazuki.c:878 src/iop/ekvidomist.c:380
+msgid "star"
+msgstr "星芒"
+
+#: src/iop/ekvidokazuki.c:879 src/iop/ekvidomist.c:381
+msgid "number of arms; 4 = cross, 2 = horizontal streak, 0 = off"
+msgstr "光芒數；4 = 十字，2 = 水平光條，0 = 關閉"
+
+#: src/iop/ekvidokazuki.c:880
+msgid "angle of the first arm (degrees)"
+msgstr "第一道光芒的角度（度）"
+
+#: src/iop/ekvidokazuki.c:882 src/iop/ekvidomist.c:384
+msgid "size of the star's bright centre (fraction of the image diagonal)"
+msgstr "星芒明亮中心的大小（影像對角線的比例）"
+
+#: src/iop/ekvidokazuki.c:883 src/iop/ekvidomist.c:385
+msgid "low: long arms on bright sources; high: short arms"
+msgstr "低：明亮光源拉出長光芒；高：光芒較短"
+
+#: src/iop/ekvidokazuki.c:884 src/iop/ekvidomist.c:386
+msgid "2 round, 1 diamond, below 1 thinner arms"
+msgstr "2 為圓形，1 為菱形，小於 1 光芒更細"
+
+#: src/iop/ekvidokazuki.c:885 src/iop/ekvidokazuki.c:886
+msgid "stretch the whole star"
+msgstr "拉伸整個星芒"
+
+#: src/iop/ekvidokazuki.c:887 src/iop/ekvidomist.c:389
+msgid "share of the glow in the star (low: only the hottest points show arms)"
+msgstr "星芒在輝光中的佔比（低：只有最亮的點才出現光芒）"
+
+#: src/iop/ekvidomist.c:90
+msgid "ekvido mist"
+msgstr "ekvido 柔焦"
+
+#: src/iop/ekvidomist.c:95
+msgid "mist|diffusion|pro-mist|bloom|glow"
+msgstr "柔焦|擴散|黑柔焦|白柔焦|輝光|mist|diffusion|pro-mist|bloom|glow"
+
+#: src/iop/ekvidomist.c:100
+msgid "physically-based mist filter: glow that scales with true highlight intensity"
+msgstr "以物理模型模擬柔焦濾鏡：輝光強度隨亮部的真實亮度變化"
+
+#: src/iop/ekvidomist.c:182
+msgid "ekvido mist: not enough memory, module skipped"
+msgstr "ekvido 柔焦：記憶體不足，已略過此模組"
+
+#: src/iop/ekvidomist.c:223
+msgid "mist white"
+msgstr "白柔焦"
+
+#: src/iop/ekvidomist.c:229
+msgid "mist black"
+msgstr "黑柔焦"
+
+#: src/iop/ekvidomist.c:314
+msgid "cannot show the glow while a blend mask is displayed"
+msgstr "顯示混合遮罩時無法顯示輝光"
+
+#: src/iop/ekvidomist.c:358 src/iop/ekvidomist.c:363
+msgid "show glow only"
+msgstr "只顯示輝光"
+
+#: src/iop/ekvidomist.c:360
+msgid "show only the glow in the centre view (not saved, not exported)"
+msgstr "中央檢視只顯示輝光（不會儲存，也不會匯出）"
+
+#: src/iop/ekvidomist.c:365
+msgid "fraction of all light the filter scatters (0.15 = 15 %)"
+msgstr "濾鏡散射的光佔全部光量的比例（0.15 = 15 %）"
+
+#: src/iop/ekvidomist.c:371
+msgid "stretch the halo horizontally"
+msgstr "水平拉伸光暈"
+
+#: src/iop/ekvidomist.c:372
+msgid "stretch the halo vertically"
+msgstr "垂直拉伸光暈"
+
+#: src/iop/ekvidomist.c:376
+msgid "size of the very wide, faint haze (fraction of the image diagonal)"
+msgstr "範圍極廣、極淡的薄霧大小（影像對角線的比例）"
+
+#: src/iop/ekvidomist.c:382
+msgid "angle of the first arm"
+msgstr "第一道光芒的角度"
+
+#: src/iop/ekvidomist.c:387
+msgid "stretch the whole star horizontally"
+msgstr "水平拉伸整個星芒"
+
+#: src/iop/ekvidomist.c:388
+msgid "stretch the whole star vertically"
+msgstr "垂直拉伸整個星芒"
