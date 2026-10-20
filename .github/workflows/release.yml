@@ -197,9 +197,13 @@ jobs:
         working-directory: .dt/darktable/packaging/macosx
         run: |
           sed 's/^dtAppName="darktable"$/dtAppName="darktable-ekvido"/' 3_make_hb_darktable_package.sh > 3_ekvido.sh
-          sed 's/^PROGN=darktable$/PROGN=darktable-ekvido/' 4_make_hb_darktable_dmg.sh > 4_ekvido.sh
+          # PROGN with a hyphen: the script's AppleScript `words of` would split it, so set it directly
+          sed -e 's/^PROGN=darktable$/PROGN=darktable-ekvido/' \
+              -e 's/^ *set {product_name} to words of .*$/ set product_name to "darktable-ekvido"/' \
+              4_make_hb_darktable_dmg.sh > 4_ekvido.sh
           grep -q 'dtAppName="darktable-ekvido"' 3_ekvido.sh
           grep -q '^PROGN=darktable-ekvido$' 4_ekvido.sh
+          grep -q 'set product_name to "darktable-ekvido"' 4_ekvido.sh
           bash 3_ekvido.sh
           bash 4_ekvido.sh
           mv ../../build/macosx/darktable-ekvido-*-arm64.dmg \
