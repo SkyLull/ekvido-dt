@@ -85,6 +85,17 @@ jobs:
           bash tools/appimage-build-script.sh
           mv build/Darktable-*-x86_64.AppImage \
             "$GITHUB_WORKSPACE/darktable-ekvido-${EKV_VERSION}-x86_64.AppImage"
+      - name: Verify AppImage
+        run: |
+          src="$GITHUB_WORKSPACE/.dt/darktable"
+          img="$PWD/darktable-ekvido-${EKV_VERSION}-x86_64.AppImage"
+          chmod +x "$img"
+          upd=$("$img" --appimage-updateinformation 2>/dev/null || true)
+          if [ -n "$upd" ]; then echo "AppImage update info must be empty: $upd"; exit 1; fi
+          mkdir -p verify && cd verify && "$img" --appimage-extract > /dev/null
+          lib=$(find squashfs-root -name libdarktable.so | head -n1)
+          bash "$GITHUB_WORKSPACE/scripts/ci-verify.sh" "$lib" "$EKV_VERSION" "$src" -- \
+            env LD_LIBRARY_PATH="$(dirname "$lib"):$PWD/squashfs-root/usr/lib" squashfs-root/usr/bin/darktable-cli
       - uses: actions/upload-artifact@v4
         with:
           name: appimage
@@ -142,6 +153,8 @@ jobs:
           magick "$SRC_DIR/data/pixmaps/256x256/darktable.png" \
             -define icon:auto-resize="256,128,64,48,32,16" "$INSTALL_PREFIX/dt_logo_multiresolution.ico"
           cp "$BUILD_DIR/darktable.iss" "$INSTALL_PREFIX/"
+          bash scripts/ci-verify.sh "$INSTALL_PREFIX/bin/libdarktable.dll" "$EKV_VERSION" "$SRC_DIR" -- \
+            "$INSTALL_PREFIX/bin/darktable-cli.exe"
       - name: Inno Setup installer
         shell: pwsh
         run: |
@@ -205,6 +218,9 @@ jobs:
           grep -q '^PROGN=darktable-ekvido$' 4_ekvido.sh
           grep -q 'set product_name to "darktable-ekvido"' 4_ekvido.sh
           bash 3_ekvido.sh
+          app=../../build/macosx/package/darktable-ekvido.app
+          bash "$GITHUB_WORKSPACE/scripts/ci-verify.sh" "$(find "$app" -name libdarktable.dylib | head -n1)" \
+            "$EKV_VERSION" "$GITHUB_WORKSPACE/.dt/darktable" -- "$app/Contents/MacOS/darktable-cli"
           bash 4_ekvido.sh
           mv ../../build/macosx/darktable-ekvido-*-arm64.dmg \
             "$GITHUB_WORKSPACE/darktable-ekvido-${EKV_VERSION}-arm64.dmg"
