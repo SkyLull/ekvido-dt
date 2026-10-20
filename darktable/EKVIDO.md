@@ -103,6 +103,12 @@ upstream zh_TW (像素, 亮部, 遮罩, 臨界值) and Clip Studio Paint for the
 language: copy `zh_TW.po`'s header with that language's `Plural-Forms` (must match upstream's
 `po/<lang>.po`, or msgfmt fails), then `mise run l10n`.
 
+Releases: the downloadable builds are not made here. The public repo's GitHub Actions workflow
+(`release.yml`) builds them portable (`BINARY_PACKAGE_BUILD=ON`, x86-64-v3 = AVX2 on x86;
+macOS 15+ arm64) when a tag `v<darktable version>-ekvido.NNNN` arrives, checks each artifact
+(`scripts/ci-verify.sh`) and drafts a GitHub Release. `mise run build` here stays
+host-native (`-march=native`) on every OS, so a local build is for this machine only.
+
 Rebase onto a new release: `git fetch upstream --tags && git rebase --onto release-X.Y.Z
 release-5.6.2 ekvido`, then re-run the build and tests.
 

@@ -14,6 +14,10 @@ on:
         required: true
         default: '0000'
 
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
 env:
   X86_FLAGS: -march=x86-64-v3 -mtune=generic
   REF_NAME: ${{ github.ref_type == 'tag' && github.ref_name || '' }}
@@ -90,11 +94,13 @@ jobs:
           src="$GITHUB_WORKSPACE/.dt/darktable"
           img="$PWD/darktable-ekvido-${EKV_VERSION}-x86_64.AppImage"
           chmod +x "$img"
-          upd=$("$img" --appimage-updateinformation 2>/dev/null || true)
+          upd=$(python3 scripts/elf-section.py "$img" .upd_info)
           if [ -n "$upd" ]; then echo "AppImage update info must be empty: $upd"; exit 1; fi
           mkdir -p verify && cd verify && "$img" --appimage-extract > /dev/null
           lib=$(find squashfs-root -name libdarktable.so | head -n1)
-          bash "$GITHUB_WORKSPACE/scripts/ci-verify.sh" "$lib" "$EKV_VERSION" "$src" -- \
+          mapfile -t plugins < <(find squashfs-root -name 'libekvido*.so')
+          [ ${#plugins[@]} = 2 ] || { echo "expected 2 ekvido plugins, found: ${plugins[*]}"; exit 1; }
+          bash "$GITHUB_WORKSPACE/scripts/ci-verify.sh" "$EKV_VERSION" "$src" "$lib" "${plugins[@]}" -- \
             env LD_LIBRARY_PATH="$(dirname "$lib"):$PWD/squashfs-root/usr/lib" squashfs-root/usr/bin/darktable-cli
       - uses: actions/upload-artifact@v4
         with:
@@ -153,7 +159,9 @@ jobs:
           magick "$SRC_DIR/data/pixmaps/256x256/darktable.png" \
             -define icon:auto-resize="256,128,64,48,32,16" "$INSTALL_PREFIX/dt_logo_multiresolution.ico"
           cp "$BUILD_DIR/darktable.iss" "$INSTALL_PREFIX/"
-          bash scripts/ci-verify.sh "$INSTALL_PREFIX/bin/libdarktable.dll" "$EKV_VERSION" "$SRC_DIR" -- \
+          mapfile -t plugins < <(find "$INSTALL_PREFIX" -name 'libekvido*.dll')
+          [ ${#plugins[@]} = 2 ] || { echo "expected 2 ekvido plugins, found: ${plugins[*]}"; exit 1; }
+          bash scripts/ci-verify.sh "$EKV_VERSION" "$SRC_DIR" "$INSTALL_PREFIX/bin/libdarktable.dll" "${plugins[@]}" -- \
             "$INSTALL_PREFIX/bin/darktable-cli.exe"
       - name: Inno Setup installer
         shell: pwsh
@@ -219,8 +227,10 @@ jobs:
           grep -q 'set product_name to "darktable-ekvido"' 4_ekvido.sh
           bash 3_ekvido.sh
           app=../../build/macosx/package/darktable-ekvido.app
-          bash "$GITHUB_WORKSPACE/scripts/ci-verify.sh" "$(find "$app" -name libdarktable.dylib | head -n1)" \
-            "$EKV_VERSION" "$GITHUB_WORKSPACE/.dt/darktable" -- "$app/Contents/MacOS/darktable-cli"
+          set -- "$app"/Contents/Resources/lib/darktable/plugins/libekvido*.so
+          [ $# = 2 ] && [ -e "$1" ] || { echo "expected 2 ekvido plugins, found: $*"; exit 1; }
+          bash "$GITHUB_WORKSPACE/scripts/ci-verify.sh" "$EKV_VERSION" "$GITHUB_WORKSPACE/.dt/darktable" \
+            "$(find "$app" -name libdarktable.dylib | head -n1)" "$@" -- "$app/Contents/MacOS/darktable-cli"
           bash 4_ekvido.sh
           mv ../../build/macosx/darktable-ekvido-*-arm64.dmg \
             "$GITHUB_WORKSPACE/darktable-ekvido-${EKV_VERSION}-arm64.dmg"
@@ -231,7 +241,7 @@ jobs:
           if-no-files-found: error
 
   release:
-    if: startsWith(github.ref, 'refs/tags/')
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
     needs: [appimage, windows, macos]
     runs-on: ubuntu-latest
     permissions:
@@ -257,5 +267,11 @@ jobs:
 
           x86 builds need a CPU with AVX2 (Intel Haswell 2013+, any AMD Ryzen). Verify downloads with \`SHA256SUMS\`.
           EOF
-          gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --draft \
-            --title "ekvido-dt $ver" --notes-file notes.md darktable-ekvido-* SHA256SUMS
+          # a re-run (or a re-pushed tag) updates the existing release instead of adding a draft
+          if gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --clobber \
+              darktable-ekvido-* SHA256SUMS
+          else
+            gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --draft \
+              --title "ekvido-dt $ver" --notes-file notes.md darktable-ekvido-* SHA256SUMS
+          fi
