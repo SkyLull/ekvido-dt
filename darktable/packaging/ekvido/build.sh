@@ -5,8 +5,9 @@ cd "$(git rev-parse --show-toplevel)"
 case "$(uname -s)" in
   Darwin)
     prefix="$PWD/build/macosx"
+    # host-maximal like Linux/Windows (-march=native); portable release builds come from CI
     extra=(-DCMAKE_OSX_DEPLOYMENT_TARGET=13.5 -DCMAKE_CXX_FLAGS=-stdlib=libc++
-           -DCMAKE_OBJCXX_FLAGS=-stdlib=libc++ -DBINARY_PACKAGE_BUILD=ON
+           -DCMAKE_OBJCXX_FLAGS=-stdlib=libc++ -DBINARY_PACKAGE_BUILD=OFF
            -DDONT_USE_INTERNAL_LUA=OFF -DUSE_COLORD=OFF -DUSE_KWALLET=OFF -DBUILD_CMSTEST=OFF)
     ;;
   Linux)

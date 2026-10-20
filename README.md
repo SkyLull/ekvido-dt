@@ -34,6 +34,23 @@ Into THIS:
 ![處理後 / after](assets/after.webp)
 <sub>自攝照片/Photo by me</sub>
 
+## 下載 Download
+
+到 [Releases](https://github.com/SkyLull/ekvido-dt/releases) 下載已經建置好的版本：<br>
+Prebuilt downloads are on the [Releases](https://github.com/SkyLull/ekvido-dt/releases) page:
+
+| 檔案 File | 適用 Runs on |
+|---|---|
+| `darktable-ekvido-…-win64.exe` | Windows 10/11 x64。會裝成 **darktable-dev**，和一般版 darktable 並存。<br>Installs as **darktable-dev**, beside stock darktable. |
+| `darktable-ekvido-…-x86_64.AppImage` | Linux x86_64，glibc 2.35 以上（Ubuntu 22.04+、Debian 12+、Fedora 36+ 等）。`chmod +x` 之後直接執行。<br>`chmod +x`, then run it. |
+| `darktable-ekvido-…-arm64.dmg` | macOS 15 以上的 Apple Silicon。把 `darktable-ekvido.app` 拖進「應用程式」。沒有經過 Apple 公證，第一次開啟要到「系統設定 → 隱私權與安全性」按「強制打開」；若顯示「已損毀」，執行 `xattr -dr com.apple.quarantine /Applications/darktable-ekvido.app`。<br>Drag `darktable-ekvido.app` to Applications. Not notarized: on first open, allow it in System Settings → Privacy & Security; if macOS calls it damaged, run the `xattr` command above. |
+
+> ⚠️ **CPU 需求 CPU requirement**：x86 版本需要支援 **AVX2** 的 CPU（Intel Haswell／2013 年以後，或任何 AMD Ryzen）。更舊的 CPU 會在啟動時出現「Illegal Instruction」並直接結束，請改用下面的方式自己建置（`mise run build` 會針對你自己的 CPU 最佳化）。<br>
+> x86 builds need a CPU with **AVX2** (Intel Haswell / 2013 or newer, or any AMD Ryzen). On older CPUs darktable stops at startup with "Illegal Instruction"; build from source instead (`mise run build` optimizes for your own CPU).
+
+設定和圖庫跟一般版 darktable 共用。可以用 `SHA256SUMS` 檢查下載的檔案。<br>
+Settings and the library are shared with stock darktable. Verify downloads with `SHA256SUMS`.
+
 ## 兩個模組 The two modules
 
 | 模組 Module | 功用 What it does |

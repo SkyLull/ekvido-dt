@@ -1,0 +1,241 @@
+# Release binaries: a tag v<darktable version>-ekvido.NNNN builds the Windows installer, the
+# Linux AppImage and the macOS dmg (portable: x86-64-v3 on x86) and drafts a GitHub Release.
+# Run it by hand (Actions -> release -> Run workflow) for a trial build without a release.
+# The build steps follow darktable's own .github/workflows/nightly.yml at the pinned tag.
+name: release
+
+on:
+  push:
+    tags: ['v*-ekvido.*']
+  workflow_dispatch:
+    inputs:
+      number:
+        description: 'Build number NNNN (4 digits); trial runs only build artifacts'
+        required: true
+        default: '0000'
+
+env:
+  X86_FLAGS: -march=x86-64-v3 -mtune=generic
+  REF_NAME: ${{ github.ref_type == 'tag' && github.ref_name || '' }}
+  NUMBER: ${{ inputs.number }}
+
+jobs:
+  appimage:
+    runs-on: ubuntu-22.04
+    env:
+      CC: gcc-12
+      CXX: g++-12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install compiler
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install gcc-12 g++-12
+      - name: Install base dependencies
+        run: |
+          sudo apt-get -y install build-essential desktop-file-utils gettext git gdb intltool \
+            libarchive-dev libatk1.0-dev libcairo2-dev libcolord-dev libcolord-gtk-dev libcups2-dev \
+            libcurl4-gnutls-dev libimage-exiftool-perl libfuse2 libgdk-pixbuf2.0-dev libglib2.0-dev \
+            libgmic-dev libgraphicsmagick1-dev libgtk-3-dev libinih-dev libjson-glib-dev liblcms2-dev \
+            liblensfun-dev liblensfun-bin liblensfun-data-v1 liblensfun1 libopencv-calib3d-dev \
+            libopencv-core-dev libopencv-features2d-dev libopencv-flann-dev libopencv-imgproc-dev \
+            libosmgpsmap-1.0-dev libpango1.0-dev libpng-dev libportmidi-dev libpotrace-dev \
+            libpugixml-dev librsvg2-dev libsaxon-java libsdl2-dev libsecret-1-dev libsqlite3-dev \
+            libtiff5-dev libwebp-dev libx11-dev libxml2-dev libxml2-utils ninja-build perl po4a \
+            python3-jsonschema xsltproc zlib1g-dev appstream
+      - name: Add PPA for newer multimedia libs
+        run: |
+          sudo add-apt-repository -y ppa:savoury1/graphics
+          sudo add-apt-repository -y ppa:savoury1/ffmpeg4
+          sudo add-apt-repository -y ppa:savoury1/display
+          sudo apt-get update
+      - name: Install extra dependencies
+        run: |
+          sudo apt-get -y install aom-tools libaom-dev libavif-dev libgphoto2-dev libde265-dev \
+            libimath-dev libjpeg-turbo8-dev libjxl-dev libopenexr-dev libopenh264-dev \
+            libopenjp2-7-dev libsharpyuv-dev libx265-dev libwebm-dev x11proto-dev libxfixes-dev
+      - name: Build libheif
+        run: |
+          git clone --branch v1.23.5 --depth 1 https://github.com/strukturag/libheif src-libheif
+          cmake -S src-libheif -B src-libheif/build -G Ninja -DCMAKE_BUILD_TYPE=Release \
+            -DENABLE_PLUGIN_LOADING=OFF -DWITH_LIBDE265=ON -DWITH_AOM_DECODER=ON \
+            -DWITH_AOM_ENCODER=ON -DWITH_OpenH264_DECODER=ON -DWITH_JPEG_DECODER=ON \
+            -DWITH_OpenJPEG_DECODER=ON -DWITH_LIBSHARPYUV=ON -DCMAKE_INSTALL_PREFIX=/usr
+          ninja -C src-libheif/build
+          sudo ninja -C src-libheif/build install
+      - name: Build exiv2
+        run: |
+          git clone --branch v0.28.9 --depth 1 https://github.com/Exiv2/exiv2 src-exiv2
+          cmake -S src-exiv2 -B src-exiv2/build -G Ninja -DCMAKE_BUILD_TYPE=Release \
+            -DBUILD_SHARED_LIBS=ON -DEXIV2_ENABLE_NLS=ON -DEXIV2_ENABLE_VIDEO=OFF \
+            -DCMAKE_INSTALL_PREFIX=/usr
+          cmake --build src-exiv2/build
+          sudo cmake --install src-exiv2/build
+      - name: Prepare darktable + ekvido
+        run: bash scripts/ci-prepare.sh "$REF_NAME" "$NUMBER" >> "$GITHUB_ENV"
+      - name: Update Lensfun data
+        run: sudo lensfun-update-data
+      - name: Build AppImage
+        working-directory: .dt/darktable
+        env:
+          DARKTABLE_APPIMAGE_UPDATE: 'no'
+        run: |
+          export CFLAGS="$X86_FLAGS -ffile-prefix-map=$PWD=."
+          export CXXFLAGS="$CFLAGS"
+          bash tools/appimage-build-script.sh
+          mv build/Darktable-*-x86_64.AppImage \
+            "$GITHUB_WORKSPACE/darktable-ekvido-${EKV_VERSION}-x86_64.AppImage"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: appimage
+          path: darktable-ekvido-*-x86_64.AppImage
+          if-no-files-found: error
+
+  windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - run: git config --global core.autocrlf input
+        shell: bash
+      - uses: actions/checkout@v4
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          install: >-
+            git intltool po4a diffutils
+          pacboy: >-
+            cc:p cmake:p libxslt:p ninja:p python-jsonschema:p curl:p drmingw:p gcc-libs:p
+            gettext:p gmic:p graphicsmagick:p gtk3:p icu:p imath:p iso-codes:p lcms2:p lensfun:p
+            libavif:p libgphoto2:p libheif:p libjpeg-turbo:p libjxl:p libpng:p librsvg:p
+            libsecret:p libtiff:p libwebp:p libxml2:p lua54:p omp:p opencv:p openexr:p
+            openjpeg2:p osm-gps-map:p portmidi:p potrace:p pugixml:p SDL2:p sqlite3:p
+            webp-pixbuf-loader:p zlib:p imagemagick:p
+      - name: Build exiv2
+        run: |
+          git clone --branch v0.27.7 --depth 1 https://github.com/Exiv2/exiv2 src-exiv2
+          cmake -S src-exiv2 -B src-exiv2/build -G Ninja -DCMAKE_BUILD_TYPE=Release \
+            -DBUILD_SHARED_LIBS=ON -DEXIV2_ENABLE_BMFF=ON -DEXIV2_ENABLE_NLS=ON \
+            -DEXIV2_ENABLE_VIDEO=OFF -DEXIV2_ENABLE_WIN_UNICODE=ON -DCMAKE_INSTALL_PREFIX=${MINGW_PREFIX}
+          cmake --build src-exiv2/build
+          cmake --install src-exiv2/build
+      - name: Prepare darktable + ekvido
+        run: bash scripts/ci-prepare.sh "$REF_NAME" "$NUMBER" >> "$GITHUB_ENV"
+      - name: Update Lensfun data
+        run: lensfun-update-data
+      - name: Build and install
+        env:
+          ECO: -DBINARY_PACKAGE_BUILD=ON
+          CMAKE_BUILD_TYPE: Release
+          TARGET: skiptest
+          GENERATOR: Ninja
+        run: |
+          export SRC_DIR="$(cygpath -m "$GITHUB_WORKSPACE/.dt/darktable")"
+          export BUILD_DIR="$(cygpath -m "$GITHUB_WORKSPACE/build")"
+          export INSTALL_PREFIX="$(cygpath -m "$GITHUB_WORKSPACE/install")"
+          export CFLAGS="$X86_FLAGS -ffile-prefix-map=$SRC_DIR=."
+          export CXXFLAGS="$CFLAGS"
+          cmake -E make_directory "$BUILD_DIR" "$INSTALL_PREFIX"
+          "$(cygpath -u "$SRC_DIR")/.ci/ci-script.sh"
+          magick "$SRC_DIR/data/pixmaps/256x256/darktable.png" \
+            -define icon:auto-resize="256,128,64,48,32,16" "$INSTALL_PREFIX/dt_logo_multiresolution.ico"
+          cp "$BUILD_DIR/darktable.iss" "$INSTALL_PREFIX/"
+      - name: Inno Setup installer
+        shell: pwsh
+        run: |
+          choco upgrade innosetup --no-progress
+          cd "$env:GITHUB_WORKSPACE/install"
+          iscc darktable.iss
+          Move-Item Output/*.exe "$env:GITHUB_WORKSPACE/darktable-ekvido-$env:EKV_VERSION-win64.exe"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows
+          path: darktable-ekvido-*-win64.exe
+          if-no-files-found: error
+
+  macos:
+    runs-on: macos-15
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
+      CC: cc
+      CXX: c++
+      MACOSX_DEPLOYMENT_TARGET: '15.0'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare darktable + ekvido
+        run: bash scripts/ci-prepare.sh "$REF_NAME" "$NUMBER" >> "$GITHUB_ENV"
+      - name: Install dependencies
+        run: |
+          brew untap --force aws/tap || true
+          brew update > /dev/null || true
+          cd .dt/darktable/.ci
+          export HOMEBREW_NO_INSTALL_UPGRADE=1
+          brew bundle --verbose || true
+          export HOMEBREW_NO_INSTALL_FROM_API=1
+          brew developer on
+          gm_formula=$(brew edit --quiet --print-path graphicsmagick)
+          sed 's/--with-modules/--disable-installed/1' "$gm_formula" > gm_formula.tmp
+          mv gm_formula.tmp "$gm_formula"
+          brew reinstall --build-from-source --force --quiet graphicsmagick
+      - name: Build and install
+        env:
+          ECO: -DBINARY_PACKAGE_BUILD=ON -DBUILD_CURVE_TOOLS=ON -DBUILD_NOISE_TOOLS=ON -DUSE_GRAPHICSMAGICK=ON -DUSE_IMAGEMAGICK=OFF
+          CMAKE_BUILD_TYPE: Release
+          TARGET: skiptest
+          GENERATOR: Ninja
+        run: |
+          export SRC_DIR="$GITHUB_WORKSPACE/.dt/darktable"
+          export BUILD_DIR="$SRC_DIR/build"
+          export INSTALL_PREFIX="$SRC_DIR/build/macosx"
+          export CFLAGS="-ffile-prefix-map=$SRC_DIR=."
+          export CXXFLAGS="$CFLAGS"
+          cmake -E make_directory "$BUILD_DIR" "$INSTALL_PREFIX"
+          "$SRC_DIR/.ci/ci-script.sh"
+      - name: App bundle and dmg (named darktable-ekvido)
+        working-directory: .dt/darktable/packaging/macosx
+        run: |
+          sed 's/^dtAppName="darktable"$/dtAppName="darktable-ekvido"/' 3_make_hb_darktable_package.sh > 3_ekvido.sh
+          sed 's/^PROGN=darktable$/PROGN=darktable-ekvido/' 4_make_hb_darktable_dmg.sh > 4_ekvido.sh
+          grep -q 'dtAppName="darktable-ekvido"' 3_ekvido.sh
+          grep -q '^PROGN=darktable-ekvido$' 4_ekvido.sh
+          bash 3_ekvido.sh
+          bash 4_ekvido.sh
+          mv ../../build/macosx/darktable-ekvido-*-arm64.dmg \
+            "$GITHUB_WORKSPACE/darktable-ekvido-${EKV_VERSION}-arm64.dmg"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos
+          path: darktable-ekvido-*-arm64.dmg
+          if-no-files-found: error
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: [appimage, windows, macos]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - name: Draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd dist
+          sha256sum darktable-ekvido-* > SHA256SUMS
+          ver="${GITHUB_REF_NAME#v}"; ver="${ver/-ekvido./+ekvido.}"
+          cat > notes.md <<EOF
+          darktable ${ver%%+*} with the ekvido modules (kazuki, mist), build ${ver##*.}.
+
+          - Windows 10/11 x64: \`…-win64.exe\` (installs as **darktable-dev** beside stock darktable)
+          - Linux x86_64, glibc 2.35+ (Ubuntu 22.04+, Debian 12+, Fedora 36+): \`…-x86_64.AppImage\` (\`chmod +x\`, run)
+          - macOS 15+ on Apple Silicon: \`…-arm64.dmg\` (not notarized: first open via System Settings → Privacy & Security)
+
+          x86 builds need a CPU with AVX2 (Intel Haswell 2013+, any AMD Ryzen). Verify downloads with \`SHA256SUMS\`.
+          EOF
+          gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --draft \
+            --title "ekvido-dt $ver" --notes-file notes.md darktable-ekvido-* SHA256SUMS
